@@ -8,7 +8,8 @@ const API_URL = `https://api.edamam.com/search?q=pumpkin&app_id=${process.env.RE
 
 export default class App extends Component {
   state = {
-    recipes: []
+    recipes: [],
+    loading: false
   }
 
   componentDidMount = async () => {
@@ -16,8 +17,14 @@ export default class App extends Component {
   }
 
   fetchRecipes = async () => {
+    this.setState({ loading: true })
+
     const response = await request.get(API_URL);
-    this.setState({ recipes: response.body.hits })
+
+    this.setState({
+      recipes: response.body.hits,
+      loading: false
+    })
   }
   
   render() {
@@ -30,7 +37,11 @@ export default class App extends Component {
 
         <div className='recipe-box'>
         {
-          this.state.recipes.map((rec, id) => 
+          this.state.loading
+          ? <div className='spinner'>
+              <img src='https://media3.giphy.com/media/QmMmDY5F0FOn4KMaFo/giphy.gif?cid=5a9984cc5zio1cnbg1jpuz0s1xyebwvta3n0d8ymo8sdyani&rid=giphy.gif' alt='Pumpkin saying Boo!' />
+            </div>
+          : this.state.recipes.map((rec, id) => 
             <div
               key={id}
               className='recipe-item'>
