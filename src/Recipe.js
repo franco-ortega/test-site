@@ -4,8 +4,6 @@ const Recipe = ({title, image, url, labels}) => {
             <div className='info-box'>
                 {title}
             </div>
-            <div>
-            </div>
             <div className='image-box'>
                 <p>
                     {labels}
